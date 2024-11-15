@@ -1,10 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { FaDumbbell, FaRunning, FaHeartbeat } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [currentFeature, setCurrentFeature] = useState(0);
-
+  const navigate = useNavigate();
+  
   const features = [
     {
       Icon: FaDumbbell,
@@ -104,9 +106,12 @@ function Home() {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-center"
         >
-          <button className="btn btn-primary">
-            Start Your Journey
-          </button>
+        <button
+          onClick={() => navigate('/workouts')}
+          className="btn btn-primary"
+        >
+          Start Your Journey
+        </button>
         </motion.div>
       </div>
     </motion.div>

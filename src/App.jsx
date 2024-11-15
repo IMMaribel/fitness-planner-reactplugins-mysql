@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Map from './components/Map';
 import Calendar from './components/Calendar';
 import Charts from './components/Charts';
+import WorkoutsPage from './pages/WorkoutsPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/map" element={<Map />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/charts" element={<Charts />} />
+          <Route path="/workouts" element={<WorkoutsPage />} />
         </Routes>
       </main>
     </div>

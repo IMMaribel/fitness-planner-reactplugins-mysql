@@ -18,8 +18,7 @@ function Map() {
         {showComingSoon && <ComingSoon />}
       </AnimatePresence>
 
-      {/* Auto-hide coming soon message after 2 seconds */}
-      {setTimeout(() => setShowComingSoon(false), 2000)}
+      {setTimeout(() => setShowComingSoon(false), 5000)}
     </motion.div>
   );
 }

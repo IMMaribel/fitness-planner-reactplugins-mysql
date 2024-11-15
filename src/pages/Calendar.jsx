@@ -51,7 +51,7 @@ const Calendar = () => {
               >
                 <BsCalendarWeekFill className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600 text-lg">
-                  El calendario se implementará en futuros sprints
+                The schedule will be implemented in future
                 </p>
               </motion.div>
             </div>

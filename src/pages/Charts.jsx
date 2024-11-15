@@ -52,7 +52,7 @@ const Charts = () => {
               >
                 <BiSolidChart className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600 text-lg">
-                  Los gráficos se implementarán en futuros sprints
+                Charts will be implemented in future
                 </p>
               </motion.div>
             </div>
