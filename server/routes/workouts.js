@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import express from 'express';
 import db from '../db.js';
 
-const router = Router();
+const router = express.Router();
 
-// Obtener todos los workouts
+// Ruta para obtener todos los workouts
 router.get('/workouts', (req, res) => {
   const sql = 'SELECT * FROM workouts';
   db.query(sql, (err, results) => {
@@ -16,24 +16,29 @@ router.get('/workouts', (req, res) => {
   });
 });
 
-// Actualizar un workout
+// Ruta para crear un nuevo workout
+router.post('/workouts', (req, res) => {
+  const { workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes } = req.body;
+
+  const sql = `
+    INSERT INTO workouts (workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql, [workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes], (err, results) => {
+    if (err) {
+      console.error('Error al crear el workout:', err);
+      res.status(500).json({ error: 'Error al crear el workout' });
+    } else {
+      res.json({ user_id: results.insertId, ...req.body });
+    }
+  });
+});
+
+// Ruta para actualizar un workout
 router.put('/workouts/:user_id', (req, res) => {
   const { user_id } = req.params;
   const { workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes } = req.body;
-
-  console.log('Datos recibidos para actualizar el workout:', {
-    workout_date,
-    workout_type,
-    duration_minutes,
-    intensity_level,
-    exercises,
-    calories_burned,
-    notes,
-  });
-
-  if (!workout_date || !workout_type || !duration_minutes || !intensity_level || !exercises) {
-    return res.status(400).json({ error: 'Por favor, proporciona todos los campos requeridos' });
-  }
 
   const sql = `
     UPDATE workouts 
@@ -41,50 +46,33 @@ router.put('/workouts/:user_id', (req, res) => {
     WHERE user_id = ?
   `;
 
-  db.query(sql, [workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned || null, notes || null, user_id], (err, results) => {
+  db.query(sql, [workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes, user_id], (err, results) => {
     if (err) {
       console.error('Error al actualizar el workout:', err);
-      return res.status(500).json({ error: 'Error al actualizar el workout' });
+      res.status(500).json({ error: 'Error al actualizar el workout' });
     } else if (results.affectedRows === 0) {
-      return res.status(404).json({ error: 'Workout no encontrado' });
+      res.status(404).json({ error: 'Workout no encontrado' });
     } else {
-      return res.json({ message: 'Workout actualizado correctamente' });
+      res.json({ message: 'Workout actualizado correctamente' });
     }
   });
 });
 
-// Crear un nuevo workout
-router.post('/workouts', (req, res) => {
-  const { workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes } = req.body;
+// **Ruta para eliminar un workout**
+router.delete('/workouts/:user_id', (req, res) => {
+  const { user_id } = req.params;
 
-  if (!workout_date || !workout_type || !duration_minutes || !intensity_level || !exercises) {
-    return res.status(400).json({ error: 'Please provide all required fields.' });
-  }
+  const sql = 'DELETE FROM workouts WHERE user_id = ?';
 
-  const sql = `
-    INSERT INTO workouts (workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned, notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  db.query(sql, [workout_date, workout_type, duration_minutes, intensity_level, exercises, calories_burned || 0, notes || ''], (err, result) => {
+  db.query(sql, [user_id], (err, results) => {
     if (err) {
-      console.error('Error al crear el workout:', err);
-      return res.status(500).json({ error: 'Error creating the workout' });
+      console.error('Error al eliminar el workout:', err);
+      res.status(500).json({ error: 'Error al eliminar el workout' });
+    } else if (results.affectedRows === 0) {
+      res.status(404).json({ error: 'Workout no encontrado' });
+    } else {
+      res.json({ message: 'Workout eliminado correctamente' });
     }
-
-    // Nuevo workout
-    const newWorkout = {
-      user_id: result.insertId,
-      workout_date,
-      workout_type,
-      duration_minutes,
-      intensity_level,
-      exercises,
-      calories_burned,
-      notes
-    };
-
-    res.status(201).json(newWorkout);
   });
 });
 

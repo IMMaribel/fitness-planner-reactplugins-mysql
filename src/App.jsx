@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
-import Map from './components/Map';
-import Calendar from './components/Calendar';
-import Charts from './components/Charts';
+import Home from './pages/Home';
+import Map from './pages/Map';
+import Calendar from './pages/Calendar';
+import Charts from './pages/Charts';
 import WorkoutsPage from './pages/WorkoutsPage';
 
 function App() {

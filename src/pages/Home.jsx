@@ -1,41 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { FaDumbbell, FaRunning, FaHeartbeat } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useFeatureCarousel } from '../hooks/useFeatureCarousel';
 
 function Home() {
-  const [currentFeature, setCurrentFeature] = useState(0);
   const navigate = useNavigate();
-  
-  const features = [
-    {
-      Icon: FaDumbbell,
-      title: "Strength Training",
-      description: "Custom workout plans tailored to your goals",
-      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      Icon: FaRunning,
-      title: "Cardio Workouts",
-      description: "Track your running, cycling, and more",
-      image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      Icon: FaHeartbeat,
-      title: "Health Monitoring",
-      description: "Monitor your progress and vital stats",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80"
-    }
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % features.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const CurrentIcon = features[currentFeature].Icon;
+  const { currentFeature, setCurrentFeature, features, CurrentIcon } = useFeatureCarousel();
 
   return (
     <motion.div
@@ -106,12 +75,12 @@ function Home() {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-center"
         >
-        <button
-          onClick={() => navigate('/workouts')}
-          className="btn btn-primary"
-        >
-          Start Your Journey
-        </button>
+          <button
+            onClick={() => navigate('/workouts')}
+            className="btn btn-primary"
+          >
+            Start Your Journey
+          </button>
         </motion.div>
       </div>
     </motion.div>
