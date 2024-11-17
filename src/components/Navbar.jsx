@@ -47,7 +47,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center group">
             <GiWeightLiftingUp className="w-8 h-8 text-blue-500 group-hover:text-blue-400 transition-colors duration-300" />
-            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500  group-hover:text-blue-400 bg-clip-text text-transparent">
               FitPlanner
             </span>
           </Link>

@@ -1,4 +1,3 @@
-import React from 'react';
 
 function WorkoutCreateModal({ newWorkout, handleCreateChange, handleCreateSave, handleCloseCreateModal }) {
   return (
@@ -35,7 +34,7 @@ function WorkoutCreateModal({ newWorkout, handleCreateChange, handleCreateSave, 
                   onChange={handleCreateChange}
                   className="w-full p-2 rounded-md bg-gray-800 text-gray-100"
                 >
-                  <option value="">Select Type</option>
+                  <option value="" disabled>Select Type</option>
                   <option value="Cardio">Cardio</option>
                   <option value="Strength">Strength</option>
                   <option value="Flexibility">Flexibility</option>
@@ -60,9 +59,10 @@ function WorkoutCreateModal({ newWorkout, handleCreateChange, handleCreateSave, 
                   name="intensity_level"
                   value={newWorkout.intensity_level || ''}
                   onChange={handleCreateChange}
-                  className="w-full p-2 rounded-md bg-gray-800 text-gray-100"
+                  className="select-dropdown"
+                  tabIndex={0}
                 >
-                  <option value="">Select Intensity</option>
+                  <option value="" disabled>Select Intensity</option>
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
                   <option value="High">High</option>

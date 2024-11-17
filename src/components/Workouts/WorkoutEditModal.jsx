@@ -36,7 +36,7 @@ function WorkoutEditModal({ editWorkout, handleChange, handleSave, handleCloseMo
             onChange={handleChange}
             className="w-full p-2 rounded-md bg-gray-800 text-gray-100"
           >
-            <option value="">Select Type</option>
+            <option value="" disabled>Select Type</option>
             <option value="Cardio">Cardio</option>
             <option value="Strength">Strength</option>
             <option value="Flexibility">Flexibility</option>
@@ -57,14 +57,18 @@ function WorkoutEditModal({ editWorkout, handleChange, handleSave, handleCloseMo
         </div>
         <div className="mb-4">
           <label className="block text-sm mb-2">Intensity</label>
-          <input
-            type="text"
+          <select
             name="intensity_level"
-            placeholder={editWorkout.intensity_level}
             value={editWorkout.intensity_level || ''}
             onChange={handleChange}
-            className="w-full p-2 rounded-md bg-gray-800 text-gray-100"
-          />
+            className="select-dropdown"
+            tabIndex={0}
+          >
+            <option value="" disabled>Select Intensity</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
         </div>
         <div className="mb-4">
           <label className="block text-sm mb-2">Burned Calories</label>
