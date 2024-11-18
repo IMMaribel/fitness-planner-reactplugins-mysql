@@ -19,7 +19,7 @@ function Charts() {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    // Obtener todos los workouts almacenados al cargar el componente
+    // Obtener todos los workouts
     axios
       .get('http://localhost:5000/api/workouts')
       .then((response) => {
@@ -30,7 +30,7 @@ function Charts() {
       });
   }, []);
 
-  // Datos para el gráfico de barras apiladas
+  // Gráfico de barras apiladas
   const barChartData = {
     labels: ['Cardio', 'Strength', 'Flexibility', 'Balance', 'Mixed'],
     datasets: [
@@ -61,7 +61,7 @@ function Charts() {
     ]
   };
 
-  // Datos para el gráfico de líneas
+  // Gráfico de líneas
   const lineChartData = {
     labels: workouts.map(workout => workout.workout_date.split('T')[0]),
     datasets: [

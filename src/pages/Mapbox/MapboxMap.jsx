@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import MapContainer from './MapContainer';
 import MarkerDetailsForm from './MarkerDetailsForm';
 import LocationList from './LocationList';
+import LocationFilter from './LocationFilter';
 import axios from 'axios';
 import { RiMapPinFill } from 'react-icons/ri';
-
 
 function MapboxMap() {
   const [viewport, setViewport] = useState({
@@ -22,9 +22,10 @@ function MapboxMap() {
     type: 'Gym',
   });
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('All');
 
-  useEffect(() => {
-    // Obtener todas las ubicaciones
+  // Obtener todas las ubicaciones desde la API
+  const fetchLocations = () => {
     axios
       .get('http://localhost:5000/api/locations')
       .then((response) => {
@@ -33,6 +34,11 @@ function MapboxMap() {
       .catch((error) => {
         console.error('Error al obtener las ubicaciones:', error);
       });
+  };
+
+  useEffect(() => {
+    // Obtener todas las ubicaciones al cargar el componente
+    fetchLocations();
   }, []);
 
   // Manejar los cambios en los inputs
@@ -58,9 +64,9 @@ function MapboxMap() {
       axios
         .post('http://localhost:5000/api/locations', locationData)
         .then((response) => {
-          console.log('Ubicación almacenada:', response.data);
           alert('Location saved successfully');
-          setLocations([...locations, response.data]);
+          setMarker(null);
+          fetchLocations();
         })
         .catch((error) => {
           console.error('Error al guardar la ubicación:', error);
@@ -76,8 +82,8 @@ function MapboxMap() {
     axios
       .delete(`http://localhost:5000/api/locations/${id}`)
       .then(() => {
-        setLocations(locations.filter((location) => location.id !== id));
         alert('Location deleted successfully');
+        fetchLocations(); // Actualizar la lista de ubicaciones después de eliminar
       })
       .catch((error) => {
         console.error('Error al eliminar la ubicación:', error);
@@ -123,6 +129,12 @@ function MapboxMap() {
     }
   };
 
+  // Filtrar ubicaciones antes de mostrarlas en el mapa
+  const filteredLocations =
+    filterType === 'All'
+      ? locations
+      : locations.filter((location) => location.type === filterType);
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex items-center space-x-3 mb-6">
@@ -147,19 +159,25 @@ function MapboxMap() {
         </button>
       </div>
 
+      {/* Filtro de ubicaciones */}
+      <LocationFilter filterType={filterType} setFilterType={setFilterType} />
+
       <MapContainer
         viewport={viewport}
         setViewport={setViewport}
         marker={marker}
         setMarker={setMarker}
+        locations={filteredLocations}
       />
+
       <MarkerDetailsForm
         newLocation={newLocation}
         handleInputChange={handleInputChange}
         handleSaveLocation={handleSaveLocation}
       />
+
       <LocationList
-        locations={locations}
+        locations={filteredLocations}
         handleDeleteLocation={handleDeleteLocation}
       />
     </div>

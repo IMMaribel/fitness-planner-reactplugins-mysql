@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaDumbbell, FaRunning, FaHeartbeat } from 'react-icons/fa';
+import { FaDumbbell, FaRunning, FaMapMarkerAlt } from 'react-icons/fa';
 
 export const useFeatureCarousel = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
@@ -7,21 +7,21 @@ export const useFeatureCarousel = () => {
   const features = [
     {
       Icon: FaDumbbell,
-      title: "Strength Training",
-      description: "Custom workout plans tailored to your goals",
+      title: "Plan Your Workouts",
+      description: "Create and organize your training routines with ease.",
       image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80"
     },
     {
       Icon: FaRunning,
-      title: "Cardio Workouts",
-      description: "Track your running, cycling, and more",
-      image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80"
+      title: "Track Your Progress",
+      description: "Visualize your progress with charts and analytics.",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80"
     },
     {
-      Icon: FaHeartbeat,
-      title: "Health Monitoring",
-      description: "Monitor your progress and vital stats",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80"
+      Icon: FaMapMarkerAlt,
+      title: "Find Training Spots",
+      description: "Search and save nearby locations for outdoor workouts.",
+      image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80"
     }
   ];
 

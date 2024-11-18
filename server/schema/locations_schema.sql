@@ -3,7 +3,7 @@ CREATE TABLE locations (
     name VARCHAR(100) NOT NULL,
     latitude DECIMAL(10, 8) NOT NULL,
     longitude DECIMAL(11, 8) NOT NULL,
-    type ENUM('Gym', 'Yoga Club', 'Crossfit', 'Public Park', 'Gym Outdoor') NOT NULL,
+    type ENUM('Gym', 'Yoga Club', 'Crossfit', 'Public Park', 'Outdoor Gym') NOT NULL,
     description TEXT,
     PRIMARY KEY (id)
 );

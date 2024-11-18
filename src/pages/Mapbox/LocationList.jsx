@@ -1,5 +1,6 @@
+import React from 'react';
 
-function LocationList({ locations, handleDeleteLocation }) {
+function LocationList({ locations = [], handleDeleteLocation }) {
   return (
     <div className="mt-6 p-4 bg-gray-800 rounded-md shadow-md">
       <h2 className="text-2xl font-bold text-white mb-4">Saved Locations</h2>
@@ -14,7 +15,7 @@ function LocationList({ locations, handleDeleteLocation }) {
                 <p className="text-gray-400 text-sm">{location.type}</p>
               </div>
               <button
-                className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded-md"
+                className="bg-indigo-600 hover:bg-indigo-600/50 text-white px-3 py-1 rounded-md transition-transform duration-300 hover:scale-105"
                 onClick={() => handleDeleteLocation(location.id)}
               >
                 Delete

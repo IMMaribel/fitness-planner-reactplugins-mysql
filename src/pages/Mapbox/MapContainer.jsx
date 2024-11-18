@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
-import axios from 'axios';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-function MapContainer({ viewport, setViewport, marker, setMarker }) {
-  const [locations, setLocations] = useState([]);
-
-  useEffect(() => {
-    // Obtener todas las ubicacionesç
-    axios
-      .get('http://localhost:5000/api/locations')
-      .then((response) => {
-        setLocations(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener las ubicaciones:', error);
-      });
-  }, []);
-
-    const handleMapClick = (event) => {
-        const { lng, lat } = event.lngLat;
-        setMarker({ latitude: lat, longitude: lng });
-    };
+function MapContainer({ viewport, setViewport, marker, setMarker, locations }) {
+  // Manejar el clic en el mapa para agregar un marcador
+  const handleMapClick = (event) => {
+    const { lng, lat } = event.lngLat;
+    if (lng && lat) {
+      setMarker({ latitude: lat, longitude: lng });
+    }
+  };
 
   return (
     <div id="mapContainer" className="h-[700px] w-full">
@@ -39,22 +27,25 @@ function MapContainer({ viewport, setViewport, marker, setMarker }) {
         height="600px"
       >
         {/* Mostrar ubicaciones guardadas */}
-        {locations.map((location) => (
-          <Marker
-            key={location.id}
-            latitude={location.latitude}
-            longitude={location.longitude}
-            onClick={() => handleMapClick(location.id)}
-          >
-            <div className=" w-4 h-4 rounded-full cursor-pointer border-2 border-white"></div>
-          </Marker>
-        ))}
+        {locations
+          .filter((location) => location.latitude && location.longitude) // Filtrar para evitar valores inválidos
+          .map((location) => (
+            <Marker
+              key={location.id}
+              latitude={location.latitude}
+              longitude={location.longitude}
+            >
+              <div className="w-4 h-4 rounded-full cursor-pointer border-2 border-indigo-600"></div>
+              <span className="text-s mt-1 text-white bg-purple-600/50 px-1 py-0.5 rounded-md">
+                {location.name}
+              </span>
+            </Marker>
+          ))}
 
-        {/* Marcador para nueva ubicación*/}
-        {marker && (
+        {/* Marcador para nueva ubicación */}
+        {marker && marker.latitude && marker.longitude && (
           <Marker latitude={marker.latitude} longitude={marker.longitude}>
-
-            <div className="bg-blue-700 w-4 h-4 rounded-full cursor-pointer border-2 border-white"></div>
+            <div className="bg-indigo-600 w-4 h-4 rounded-full cursor-pointer border-2 border-white"></div>
           </Marker>
         )}
 
