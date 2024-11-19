@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar from '@fullcalendar/react';  
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; // Para permitir la interacción con los eventos
+import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 import WorkoutCreateModal from '../components/Workouts/WorkoutCreateModal';
+import WorkoutEditModal from '../components/Workouts/WorkoutEditModal';
 import { RiCalendarFill } from 'react-icons/ri';
+import EventEditModal from '@/components/Calendar/EventEditModal';
 
 function Calendar() {
   const [events, setEvents] = useState([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [newWorkout, setNewWorkout] = useState({});
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editWorkout, setEditWorkout] = useState(null);
 
   // Cargar los workouts existentes
   useEffect(() => {
     axios.get('http://localhost:5000/api/workouts')
       .then((response) => {
-
         const calendarEvents = response.data.map((workout) => ({
           id: workout.user_id,
           title: workout.workout_type,
@@ -31,7 +34,7 @@ function Calendar() {
       });
   }, []);
 
-  // Manejar la creación de eventos (workouts)
+  // Creación de eventos
   const handleDateClick = (arg) => {
     // Abrir el modal para crear un nuevo workout
     setNewWorkout({ workout_date: arg.dateStr });
@@ -79,18 +82,67 @@ function Calendar() {
     setNewWorkout(null);
   };
 
-  // Eliminación de un evento (y del workout correspondiente)
+  // Abrir el modal de edición
   const handleEventClick = (clickInfo) => {
-    if (window.confirm(`Do you want to delete the workout: ${clickInfo.event.title}?`)) {
-      axios.delete(`http://localhost:5000/api/workouts/${clickInfo.event.id}`)
-        .then(() => {
-          // Eliminar
-          setEvents(events.filter((event) => event.id !== clickInfo.event.id));
-        })
-        .catch((error) => {
-          console.error('Error al eliminar el workout:', error);
-        });
+    const workoutData = clickInfo.event.extendedProps;
+    setEditWorkout({ ...workoutData, id: clickInfo.event.user_id });
+    setEditModalOpen(true);
+  };
+
+  // Guardar los cambios en el workout editado
+  const handleEditSave = async () => {
+    if (!editWorkout) {
+      return;
     }
+
+    const payload = {
+      workout_date: editWorkout.workout_date ? editWorkout.workout_date.split('T')[0] : '',
+      workout_type: editWorkout.workout_type,
+      duration_minutes: editWorkout.duration_minutes,
+      intensity_level: editWorkout.intensity_level,
+      exercises: editWorkout.exercises,
+      calories_burned: editWorkout.calories_burned || 0,
+      notes: editWorkout.notes || '',
+    };
+
+    try {
+      await axios.put(`http://localhost:5000/api/workouts/${editWorkout.user_id}`, payload);
+      setEvents(events.map((event) => event.user_id === editWorkout.user_id ? 
+        { 
+        ...event, 
+        title: editWorkout.workout_type, 
+        start: editWorkout.workout_date, 
+        extendedProps: { ...editWorkout } 
+        } 
+        : event
+          ));
+      handleCloseEditModal();
+      } catch (error) {
+        console.error('Error al actualizar el workout:', error);
+      }
+  };
+
+  // Eliminar el workout editado
+  const handleEditDelete = () => {
+    if (!editWorkout) {
+      return;
+    }
+
+    axios.delete(`http://localhost:5000/api/workouts/${editWorkout.user_id}`)
+      .then(() => {
+        // Eliminar el evento del calendario
+        setEvents(events.filter((event) => event.id !== editWorkout.user_id));
+        handleCloseEditModal();
+      })
+      .catch((error) => {
+        console.error('Error al eliminar el workout:', error);
+      });
+  };
+
+  // Cerrar el modal de edición
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
+    setEditWorkout(null);
   };
 
   return (
@@ -107,6 +159,11 @@ function Calendar() {
         dateClick={handleDateClick}
         eventClick={handleEventClick}
         selectable={true}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,dayGridDay'
+        }}
       />
 
       {createModalOpen && (
@@ -121,6 +178,22 @@ function Calendar() {
           }}
           handleCreateSave={handleCreateSave}
           handleCloseCreateModal={handleCloseCreateModal}
+        />
+      )}
+
+      {editModalOpen && editWorkout && (
+        <EventEditModal
+          editWorkout={editWorkout}
+          handleChange={(e) => {
+            const { name, value } = e.target;
+            setEditWorkout((prevWorkout) => ({
+              ...prevWorkout,
+              [name]: value,
+            }));
+          }}
+          handleSave={handleEditSave}
+          handleDelete={handleEditDelete}
+          handleCloseModal={handleCloseEditModal}
         />
       )}
     </div>

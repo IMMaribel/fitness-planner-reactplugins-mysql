@@ -1,4 +1,3 @@
-// src/components/Mapbox/LocationFilter.jsx
 import React from 'react';
 
 function LocationFilter({ filterType, setFilterType }) {

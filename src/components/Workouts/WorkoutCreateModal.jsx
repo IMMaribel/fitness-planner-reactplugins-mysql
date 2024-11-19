@@ -89,7 +89,7 @@ function WorkoutCreateModal({ newWorkout, handleCreateChange, handleCreateSave, 
                   className="w-full p-2 rounded-md bg-gray-800 text-gray-100"
                 />
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-center space-x-2">
                 <button
                   type="button"
                   className="btn btn-primary bg-purple-600 hover:bg-purple-600/50 mr-2 transition-transform duration-300 hover:scale-105"

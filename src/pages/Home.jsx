@@ -77,7 +77,7 @@ function Home() {
         >
           <button
             onClick={() => navigate('/workouts')}
-            className="btn btn-primary"
+            className="ml-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:bg-blue-400 text-white p-2 rounded-none transition-transform duration-500 hover:scale-110"
           >
             Start Your Journey
           </button>
