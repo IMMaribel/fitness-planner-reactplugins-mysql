@@ -1,22 +1,28 @@
 # Fit Planner 🚀
 
-Fit Planner is a comprehensive web application designed to help users plan, track, and manage their fitness routines. It allows users to create workout plans, schedule their sessions, visualize progress with charts, and find nearby training spots for outdoor workouts. Fit Planner makes staying fit organized, engaging, and motivating.
+![Fit Planner Demo](public/demogif.gif)
+
+Fit Planner is a comprehensive web application designed to help users plan, track, and manage their fitness routines. It allows users to create workout plans, schedule sessions, visualize progress with charts, and find nearby training spots for outdoor workouts. Fit Planner makes staying fit organized, engaging, and motivating.
 
 ## Table of Contents 📋
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
+- [Features](#features-)
+- [Getting Started](#getting-started-)
+  - [Prerequisites](#prerequisites-)
+  - [Installation](#installation-)
+  - [Running the Application](#running-the-application-)
+  - [Backend Setup](#backend-setup-)
+- [Usage](#usage-)
+- [Technologies Used](#technologies-used-)
+- [Road Map](#roadmap-️)
+- [Contributing](#contributing-)
+- [License](#license-)
 
 ## Features 🌟
 
-- **Create Workouts**: Users can easily create their custom workout sessions, selecting the type of workout, duration, intensity, and more.
-- **Full Calendar Integration** 🗓️: Schedule your workouts directly on a calendar, allowing you to track and manage your fitness activities efficiently.
-- **Progress Visualization** 📊: Monitor your progress with dynamic and interactive charts showing calories burned, workout types, and intensity over time.
+- **Create Workouts**: Users can easily create custom workout sessions, selecting the type of workout, duration, intensity, and more.
+- **Full Calendar Integration** 🗓️: Schedule workouts directly on a calendar, allowing efficient tracking and management of fitness activities.
+- **Progress Visualization** 📊: Monitor progress with dynamic and interactive charts showing calories burned, workout types, and intensity over time.
 - **Training Spots Finder** 📍: Search and save outdoor training spots near you, making it easy to find locations such as gyms, yoga clubs, and parks.
 
 ## Getting Started 🏁
@@ -32,61 +38,113 @@ To get a copy of the project up and running on your local machine, follow the in
 ### Installation 💻
 
 1. **Clone the repository**:
-
+   
+   ```bash
    git clone https://github.com/IMMaribel/fitness-planner-reactplugins-mysql
    ```
-2. **Navigate into the project directory**:
 
+2. **Navigate into the project directory**:
+   
+   ```bash
    cd fitness-planner-reactplugins-mysql
    ```
-3. **Install dependencies**:
 
+3. **Install dependencies**:
+   
+   ```bash
    npm install
    ```
    or
-
+   
+   ```bash
    yarn install
    ```
+
 4. **Set up environment variables**:
    - Create a `.env` file in the root directory and add the following variables:
 
-     REACT_APP_MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWFyaWJlbDciLCJhIjoiY20za3BuM2UzMGV1bzJyczlwYnNocXlldCJ9.CWEUVYsCagxJ9xT-_ieVsA
-     ```
+   ```env
+   REACT_APP_MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWFyaWJlbDciLCJhIjoiY20za3BuM2UzMGV1bzJyczlwYnNocXlldCJ9.CWEUVYsCagxJ9xT-_ieVsA
+   ```
+
 ### Running the Application 🚀
 
 - **Development Mode**:
 
+  ```bash
   npm start
   ```
   or
-
+  
+  ```bash
   yarn start
   ```
+
 - **Production Build**:
 
+  ```bash
   npm run build
   ```
   or
-
+  
+  ```bash
   yarn build
   ```
+
+### Backend Setup 🌐
+
+To get the backend up and running:
+
+   1. **Navigate to the backend directory**:
+
+      ```bash
+      cd fitnessplanner_db
+
+   2. **Install dependencies:**
+
+      ```bash
+      npm install
+
+   3. **Set up the MySQL database:**
+
+      ```bash
+      mysql -u your_username -p < database.sql
+
+   4. **Configure environment variables:**
+
+      DB_HOST=localhost
+      DB_USER=your_username
+      DB_PASSWORD=your_password
+      DB_NAME=fit_planner
+      PORT=5000
+
+   5. **Run the backend server:**
+
+      ```bash
+      npm start
+
 ## Usage 📖
 
 1. **Homepage** 🏠:
+![Fit Planner Homepage](public/screenshots/homepage.png)
    - Explore the homepage to get an overview of the app's functionalities.
    - The homepage features a carousel showcasing app features like "Create Workouts", "Track Progress", and "Find Training Spots".
 
 2. **Workouts Page** 🏋️‍♂️:
+![Workouts Page](public/screenshots/workoutspage.png)
    - Create, update, and delete workouts easily. Workouts can be filtered by type, intensity, and duration.
 
 3. **Calendar Page** 📅:
-   - Add your workouts to the calendar for efficient tracking and scheduling.
+![Calendar Page](public/screenshots/calendarpage.png)
+   - Add workouts to the calendar for efficient tracking and scheduling.
    - View, modify, or delete events directly from the calendar.
 
 4. **Charts Page** 📊:
-   - Visualize your workout data with attractive bar and line charts. Monitor your calorie expenditure and track workout distribution.
+![Charts Page](public/screenshots/chartspage.png)
+   - Visualize workout data with attractive bar and line charts. Monitor calorie expenditure and track workout distribution.
 
 5. **Map Page** 🗺️:
+![Map Page](public/screenshots/mappage.png)
    - Use the integrated map to search and save workout locations like gyms, parks, and yoga clubs.
    - Add custom markers to save new training spots.
 
@@ -99,6 +157,14 @@ To get a copy of the project up and running on your local machine, follow the in
 - **Mapping**: Mapbox GL
 - **Charts**: Chart.js
 - **Backend**: Node.js, Express, MySQL (for CRUD operations)
+
+## Roadmap 🛤️
+
+- **Version 2.0**:
+- Implement user authentication.
+- Add support for diet and nutrition tracking.
+- Integration with wearable devices for real-time workout data.
+- Improve edit modal in calendar.
 
 ## Contributing 🤝
 
