@@ -4,9 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 import WorkoutCreateModal from '../components/Workouts/WorkoutCreateModal';
-import WorkoutEditModal from '../components/Workouts/WorkoutEditModal';
 import { RiCalendarFill } from 'react-icons/ri';
 import EventEditModal from '@/components/Calendar/EventEditModal';
+import listPlugin from '@fullcalendar/list';
 
 function Calendar() {
   const [events, setEvents] = useState([]);
@@ -85,7 +85,7 @@ function Calendar() {
   // Abrir el modal de edición
   const handleEventClick = (clickInfo) => {
     const workoutData = clickInfo.event.extendedProps;
-    setEditWorkout({ ...workoutData, id: clickInfo.event.user_id });
+    setEditWorkout({ ...workoutData });
     setEditModalOpen(true);
   };
 
@@ -96,7 +96,7 @@ function Calendar() {
     }
 
     const payload = {
-      workout_date: editWorkout.workout_date ? editWorkout.workout_date.split('T')[0] : '',
+      workout_date: editWorkout.workout_date,
       workout_type: editWorkout.workout_type,
       duration_minutes: editWorkout.duration_minutes,
       intensity_level: editWorkout.intensity_level,
@@ -146,14 +146,16 @@ function Calendar() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="w-full px-2 sm:px-4 lg:px-24">
       <div className="flex items-center space-x-3 mb-6">
         <RiCalendarFill className="text-4xl text-indigo-600" />
         <h1 className="text-4xl font-bold text-white">Calendar</h1>
       </div>
 
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
+    <div className="w-full overflow-x-auto">
+    <div className="w-full max-w-full h-full sm:h-auto">
+       <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
         initialView="dayGridMonth"
         events={events}
         dateClick={handleDateClick}
@@ -162,14 +164,26 @@ function Calendar() {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,dayGridWeek,dayGridDay'
+          right: 'dayGridMonth,dayGridWeek,dayGridDay,listWeek'
         }}
-      />
+            height="auto"
+            aspectRatio={1.5} 
+            buttonText={{
+              today: 'Today',
+              month: 'Month',
+              week: 'Week',
+              day: 'Day',
+              listWeek: 'List'
+            }}
+            locale="eng"
+            />
+        </div>
+      </div>
 
       {createModalOpen && (
         <WorkoutCreateModal
-          newWorkout={newWorkout}
-          handleCreateChange={(e) => {
+        newWorkout={newWorkout}
+        handleCreateChange={(e) => {
             const { name, value } = e.target;
             setNewWorkout((prevWorkout) => ({
               ...prevWorkout,
@@ -194,8 +208,8 @@ function Calendar() {
           handleSave={handleEditSave}
           handleDelete={handleEditDelete}
           handleCloseModal={handleCloseEditModal}
-        />
-      )}
+          />
+        )}
     </div>
   );
 }

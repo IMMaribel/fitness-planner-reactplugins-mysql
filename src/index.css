@@ -40,6 +40,63 @@
   .select-dropdown {
     @apply w-full p-2 rounded-md bg-gray-800 text-gray-100 z-10 relative;
   } 
+
+}
+
+@layer pages {
+  .fc-toolbar {
+    padding: 0.5rem; /* Ajusta el padding según tus necesidades */
+  }
+
+  .fc-col-header-cell {
+    background-color: #1F2937;
+  }
+  
+  .fc-col-header-cell-cushion {
+    color: #F3F4F6;
+  }
+  
+  .fc-toolbar-title {
+    color: #F3F4F6; 
+    font-size: 1.25rem;
+  }
+  
+  .fc-button {
+    background-color: #4F46E5; 
+    color: #FFFFFF; 
+    padding: 0.25rem 0.5rem; /* Padding base */
+    font-size: 0.875rem; /* Tamaño de fuente base */
+    border-radius: 0.375rem; /* Rounded-md */
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .fc-button:hover {
+    background-color: #4338CA; 
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 932px) {
+    .fc-toolbar-title {
+      @apply text-base;
+    }
+  
+    .fc-button {
+      @apply px-1 py-0.5 text-sm;
+    }
+  
+    .fc-toolbar-chunk {
+      @apply flex-col items-center;
+    }
+  
+    .fc-button-group {
+      @apply mb-2;
+    }
+  
+    .fc-toolbar-chunk:first-child,
+    .fc-toolbar-chunk:last-child {
+      @apply w-full justify-center;
+    }
+  }
 }
 
 .carousel {
