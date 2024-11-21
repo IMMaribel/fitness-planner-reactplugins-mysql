@@ -125,26 +125,23 @@ To get the backend up and running:
 
 ## Usage 📖
 
+![Fit Planner Design](public/Designfitplanner.png)
+
 1. **Homepage** 🏠:
-![Fit Planner Homepage](public/screenshots/homepage.png)
    - Explore the homepage to get an overview of the app's functionalities.
    - The homepage features a carousel showcasing app features like "Create Workouts", "Track Progress", and "Find Training Spots".
 
 2. **Workouts Page** 🏋️‍♂️:
-![Workouts Page](public/screenshots/workoutspage.png)
    - Create, update, and delete workouts easily. Workouts can be filtered by type, intensity, and duration.
 
 3. **Calendar Page** 📅:
-![Calendar Page](public/screenshots/calendarpage.png)
    - Add workouts to the calendar for efficient tracking and scheduling.
    - View, modify, or delete events directly from the calendar.
 
 4. **Charts Page** 📊:
-![Charts Page](public/screenshots/chartspage.png)
    - Visualize workout data with attractive bar and line charts. Monitor calorie expenditure and track workout distribution.
 
 5. **Map Page** 🗺️:
-![Map Page](public/screenshots/mappage.png)
    - Use the integrated map to search and save workout locations like gyms, parks, and yoga clubs.
    - Add custom markers to save new training spots.
 
